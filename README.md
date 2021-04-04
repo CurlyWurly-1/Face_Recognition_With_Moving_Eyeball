@@ -1,7 +1,12 @@
 # Face_Recognition_Doorcam
 This is a set of modified python programs that allow face recognition and speech output. You can use these python programs in a Win10 PC, Raspberry Pi or Jetson Nano.
 
-Please note: Credits for this goes to Adam Geitgey and Murtaza Hassan.  
+Please note: Credits for the original program goes to Adam Geitgey. For more info, please follow this link
+https://medium.com/@ageitgey/build-a-hardware-based-face-recognition-system-for-150-with-the-nvidia-jetson-nano-and-python-a25cb8c891fd 
+
+The changes I have done are
+ - Modify the "doorcam.py" program to handle names for the images and output speech. 
+ - Create "amend_pics.py" which can be used to update the name assigned to each image that was automatically captured by "doorcam.py"  
 
 # SETUP
 
