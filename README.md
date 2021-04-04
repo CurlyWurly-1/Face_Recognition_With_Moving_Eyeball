@@ -24,8 +24,8 @@ You will need to do the following
      - Wait for the file to be saved (in the terminal, you will see a message saying when this has been done)
      - Stop the program 
    - Execute "python3 amend_pics.py"  
-     - The program will go thorugh each image, display it in a popup window and the terminal will prompt you to enter a new name for the image  
+     - The program will go through each image, display it in a popup window, and the terminal will prompt you to enter a new name for the image  
      - Enter a name for the image and press enter e.g. if it was you, enter your name
-     - When all catured images have been processed, the program will end
+     - When all captured images have been processed, the program will store the changes to the db file, and exit processing
    - Wait 5 mins and then execute "python3 Doorcam.py" for the 2nd time (N.B. you have to wait 5 mins for a timeout in the program to expire)
      - When the program recognises you. it will now speak and say "Hi xxxx, Nice to see you" where xxxx is the name you assigned to the image. N.B. It will only say it on "new visits" - look in the code to understand how the timing works for this   
