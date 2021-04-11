@@ -1,10 +1,12 @@
 import face_recognition
 import cv2
 from datetime import datetime, timedelta
+from math import *
 import numpy as np
 import platform
 import pickle
 import os
+import SerialModule as sv
 
 from gtts import gTTS
 from playsound import playsound
@@ -24,6 +26,10 @@ known_face_metadata = []
 # say_hi_internet
 #****************************************************************************************************
 def say_hi_internet(name):
+    try:
+        os.remove("welcome1.mp3")
+    except:
+        pass
     text = 'Hi' + name + ', Nice to see you!'
     language = 'en'
     myobj = gTTS(text=text, lang=language, slow=False)
@@ -116,7 +122,7 @@ def register_new_face(face_encoding, face_image):
     # Add a matching dictionary entry to our metadata list.
     # We can use this to keep track of how many times a person has visited, when we last saw them, etc.
     known_face_metadata.append({
-        "face_name": "newname",
+        "face_name": "?",
         "first_seen": datetime.now(),
         "first_seen_this_interaction": datetime.now(),
         "last_seen": datetime.now(),
@@ -174,6 +180,7 @@ def lookup_known_face(face_encoding):
 # main_loop
 #****************************************************************************************************
 def main_loop():
+    global ser1
     # Get access to the webcam. The method is different depending on if you are using a Raspberry Pi camera or USB input.
     if USING_RPI_CAMERA_MODULE:
         # Accessing the camera with OpenCV on a Jetson Nano requires gstreamer with a custom gstreamer source string
@@ -181,7 +188,16 @@ def main_loop():
     else:
         # Accessing the camera with OpenCV on a laptop just requires passing in the number of the webcam (usually 0)
         # Note: You can pass in a filename instead if you want to process a video file instead of a live camera stream
+        detectScale = 4       # Higher means more detail but slower
+        frameWidth  = 1280
+        frameHeight = 720
+#        frameWidth  = 800
+#        frameHeight = 600
+
         video_capture = cv2.VideoCapture(0)
+#        video_capture = cv2.VideoCapture(0, cv2.CAP_DSHOW)     # Use this for windows
+        video_capture.set(3, frameWidth)
+        video_capture.set(4, frameHeight)
 
     # Track how long since we last saved a copy of our known faces to disk as a backup.
     number_of_faces_since_save = 0
@@ -191,7 +207,7 @@ def main_loop():
         ret, frame = video_capture.read()
 
         # Resize frame of video to 1/4 size for faster face recognition processing
-        small_frame = cv2.resize(frame, (0, 0), fx=0.25, fy=0.25)
+        small_frame = cv2.resize(frame, (0, 0), fx=(1/detectScale), fy=(1/detectScale))
 
         # Convert the image from BGR color (which OpenCV uses) to RGB color (which face_recognition uses)
 #        rgb_small_frame = small_frame[:, :, ::-1]
@@ -199,6 +215,7 @@ def main_loop():
 
         # Find all the face locations and face encodings in the current frame of video
         face_locations = face_recognition.face_locations(rgb_small_frame)
+        
         face_encodings = face_recognition.face_encodings(rgb_small_frame, face_locations)
 
         # Loop through each detected face and see if it is one we have seen before
@@ -212,13 +229,13 @@ def main_loop():
             if metadata is not None:
                 time_at_door = datetime.now() - metadata['first_seen_this_interaction']
                 activeSeconds = int(time_at_door.total_seconds())
-                if activeSeconds < 1 :
-                    try:
-                        face_name = f"{metadata['face_name']}"
-                        say_hi_internet(face_name)
-                    except KeyError as e:
-                        face_name = '?'
-                        pass
+                try:
+                    face_name = f"{metadata['face_name']}"
+                except KeyError as e:
+                    face_name = '?'
+                    pass
+                if activeSeconds < 4 :
+                    say_hi_internet(face_name)
                 face_label = f"{face_name} at door {int(time_at_door.total_seconds())}s"
 
             # If this is a brand new face, add it to our list of known faces
@@ -238,10 +255,18 @@ def main_loop():
         # Draw a box around each face and label each face
         for (top, right, bottom, left), face_label in zip(face_locations, face_labels):
             # Scale back up face locations since the frame we detected in was scaled to 1/4 size
-            top *= 4
-            right *= 4
-            bottom *= 4
-            left *= 4
+            top    *= detectScale
+            right  *= detectScale
+            bottom *= detectScale
+            left   *= detectScale
+            FaceMidDiffPan  = ( left   + ( ( right - left   ) / 2 ) - ( frameWidth  / 2 ) ) * 45 / ( frameWidth  / 2 )  
+            FaceMidDiffTilt = ( bottom + ( ( top   - bottom ) / 2 ) - ( frameHeight / 2 ) ) * 45 / ( frameHeight / 2 )
+            pan  = 79 - degrees(atan(FaceMidDiffPan  / 90 ) )  # 79 is midpoint Horizontal - lower and it points its right (your left)
+            tilt = 55 + degrees(atan(FaceMidDiffTilt / 90 ) )  # 83 is midpoint vertical   - lower means it points more up
+
+# ******************************************************
+            sv.senddata(ser1 , [int(pan), int(tilt)], 3)
+# ******************************************************
 
             # Draw a box around the face
             cv2.rectangle(frame, (left, top), (right, bottom), (0, 0, 255), 2)
@@ -278,7 +303,7 @@ def main_loop():
 
 
         # Display the final frame of video with boxes drawn around each detected fames
-        cv2.imshow('Video', frame)
+        cv2.imshow('DoorCam with speech - press q to stop', frame)
 
         # Hit 'q' on the keyboard to quit!
         if cv2.waitKey(1) & 0xFF == ord('q'):
@@ -301,5 +326,6 @@ def main_loop():
 # S T A R T   O F   P R O G R A M
 #****************************************************************************************************
 if __name__ == "__main__":
+    ser1 = sv.initConnection('/dev/ttyUSB0', 9600)
     load_known_faces()
     main_loop()
