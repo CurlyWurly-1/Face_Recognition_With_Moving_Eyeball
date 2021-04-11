@@ -10,8 +10,9 @@ Please note: Credits for the original program goes to Adam Geitgey. For more inf
 https://medium.com/@ageitgey/build-a-hardware-based-face-recognition-system-for-150-with-the-nvidia-jetson-nano-and-python-a25cb8c891fd 
 
 The changes I have done are
- - Modify the "doorcam.py" program to handle names for the images and output speech. 
- - Create "amend_pics.py" which can be used to update the name assigned to each image that was automatically captured by "doorcam.py"  
+ - Create a version of the "doorcam.py" program, so that it handles names for the images, outputs speech and sends UART messages to control pan and tilt servos.
+ - Create an Arduino program called "JETSON_NANO_SERIAL_RECEIVE" which deciphers 2 numeric values from UART messages and uses them to control the position of 2 servos   
+ - Create a  python program  called "amend_pics.py" which is used to manage the images harvested by the "doorcam.py" program i.e. images can be renamed or deleted. Whatever name is given to the image, the speech processing part uses it to speak the name of the image whenever it is recognised.   
 
 # SETUP
 
