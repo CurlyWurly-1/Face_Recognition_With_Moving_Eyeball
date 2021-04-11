@@ -1,5 +1,10 @@
 # Face_Recognition_Doorcam
-This is a set of modified python programs that allow face recognition and speech output. You can use these python programs in a Win10 PC, Raspberry Pi or Jetson Nano.
+This is a set of modified python programs that can be executed on a Win10 PC, Raspberry Pi or Jetson Nano.
+They enable: 
+- Face recognition
+- Speech output via a USB speaker
+- USB Serial comms
+N.B. A separate Arduino board is connected by USB - This Arduino is used just to control 2 servos. These servos move an Eyeball such the eyeball always moves to look at the person's face.   
 
 Please note: Credits for the original program goes to Adam Geitgey. For more info, please follow this link
 https://medium.com/@ageitgey/build-a-hardware-based-face-recognition-system-for-150-with-the-nvidia-jetson-nano-and-python-a25cb8c891fd 
