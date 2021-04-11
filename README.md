@@ -1,9 +1,9 @@
 # Face_Recognition_Doorcam
 This is a set of modified python programs that can be executed on a Win10 PC, Raspberry Pi or Jetson Nano.
 They enable: 
-- Face recognition
-- Speech output via a USB speaker
-- USB Serial comms
+- Face recognition from video images seen from a Webcam
+- Speech output (On a Jetson Nano, you have to use a USB speaker)
+- USB Serial comms via USB
 N.B. A separate Arduino board is connected by USB - This Arduino is used just to control 2 servos. These servos move an Eyeball such the eyeball always moves to look at the person's face.   
 
 Please note: Credits for the original program goes to Adam Geitgey. For more info, please follow this link
@@ -60,10 +60,10 @@ You will need to do the following
    - Execute "python3 Doorcam.py" (you may have to use "python Doorcam.py")
      - Let the program capture your face (you will see this being reported in the new "video" window that pops up)
      - Wait for the file to be saved (in the terminal, you will see a message saying when this has been done)
-     - Stop the program 
+     - Press "q" when the focus is on the video window. This will stop the program 
    - Execute "python3 amend_pics.py"  
-     - The program will go through each image, display it in a popup window, and the terminal will prompt you to enter a new name for the image  
-     - Enter a name for the image and press enter e.g. if it was you, enter your name
+     - The program will go through each image, display it in a popup window, and the terminal will prompt you to enter a new name for the image, or if you want to delete it  
+     - If you want, enter a name for the image and press enter e.g. if the image is you, enter your name and press enter
      - When all captured images have been processed, the program will store the changes to the db file, and exit processing
    - Wait 5 mins and then execute "python3 Doorcam.py" for the 2nd time (N.B. you have to wait 5 mins for a timeout in the program to expire)
-     - When the program recognises you. it will now speak and say "Hi xxxx, Nice to see you" where xxxx is the name you assigned to the image. N.B. It will only say it on "new visits" - look in the code to understand how the timing works for this   
+     - When the program recognises you. it will now speak and say "Hi xxxx, Nice to see you" where xxxx is the name you assigned to the image. N.B. It will only say it if you haven't been seen for a while (5 mins) - look in the code to understand how the timing works for this   
