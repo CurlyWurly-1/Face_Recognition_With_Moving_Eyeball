@@ -6,13 +6,15 @@ They enable:
 - USB Serial comms via USB
 N.B. A separate Arduino board is connected by USB - This Arduino is used just to control 2 servos. These servos move an Eyeball such the eyeball always moves to look at the person's face.   
 
-Please note: Credits for the original program goes to Adam Geitgey. For more info, please follow this link
+Please note: Credits for the original "Doorcam.py" program goes to Adam Geitgey. For more info, please follow this link
 https://medium.com/@ageitgey/build-a-hardware-based-face-recognition-system-for-150-with-the-nvidia-jetson-nano-and-python-a25cb8c891fd 
 
 The changes I have done are
- - Create a version of the "doorcam.py" program, so that it handles names for the images, outputs speech and sends UART messages to control pan and tilt servos.
- - Create an Arduino program called "JETSON_NANO_SERIAL_RECEIVE" which deciphers 2 numeric values from UART messages and uses them to control the position of 2 servos   
+ - Create a  python program called "doorcam.py", which is cloned from Adam's code, but amended to handle image names, speech output and UART messaging (To control 2 servos in a dual axis assembly - panning and tilting). 
+ - Create a  python program called "SerialModule.py" to control the UART communication 
  - Create a  python program  called "amend_pics.py" which is used to manage the images harvested by the "doorcam.py" program i.e. images can be renamed or deleted. Whatever name is given to the image, the speech processing part uses it to speak the name of the image whenever it is recognised.   
+ - Create an Arduino program called "JETSON_NANO_SERIAL_RECEIVE" which deciphers 2 numeric values from UART messages and uses them to control the position of 2 servos  
+
 
 # SETUP
 
