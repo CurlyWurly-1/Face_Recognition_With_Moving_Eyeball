@@ -12,8 +12,40 @@ The changes I have done are
 
 You will need to do the following 
  - On your device (Win10 PC or SBC), open a terminal and execute the basic install e.g.
-   - Follow instructions from https://medium.com/@ageitgey/build-a-hardware-based-face-recognition-system-for-150-with-the-nvidia-jetson-nano-and-python-a25cb8c891fd
-   - Download the two programs in this repository to a folder on your device
+   - Follow instructions from https://medium.com/@ageitgey/build-a-hardware-based-face-recognition-system-for-150-with-the-nvidia-jetson-nano-and-python-a25cb8c891fd In summary it is
+     - sudo apt-get update
+     - sudo apt-get upgrade 
+     - sudo apt-get install python3-pip
+     - sudo apt-get install espeak
+     - sudo pip3 install pyttsx3
+     - sudo pip3 install gTTs
+     - Install either of these
+       - sudo pip3 install playsound     (Win10 or Jetson Nano)
+       - sudo apt install mpg123         (This is needed for a R.PI) 
+     - SERIAL comms
+       - pip3 install pyserial
+       - The following only for Jetson Nano or R.Pi (Win10 is OK)
+         - sudo chmod 666 /dev/ttyUSB0
+         - sudo adduser pete dialout
+     - NANO text editor (Jetson Nano only)
+       - sudo apt-get install nano
+     - FACE RECOGNITION - From https://medium.com/@ageitgey/build-a-face-recognition-system-for-60-with-the-new-nvidia-jetson-nano-2gb-and-python-46edbddd7264
+       - sudo apt-get install python3-pip cmake libopenblas-dev liblapack-dev libjpeg-dev
+       - sudo pip3 -v install Cython face_recognition
+
+     - VSCODE - Do either of these
+       - For win10 
+         - Install VSCode from https://code.visualstudio.com/download
+         - Download for Win10 and install it
+       - For Jetson nano
+         - Install VSCode from https://code.visualstudio.com/download
+         - Download the ".deb" file called  "ARM 64"
+         - Double click what you download - you can then install it
+         - Use "Search" to find the icon and attach to desktop for easy access
+       - For R.Pi 
+         - Download and use Pycharm
+       
+
 - On your device, attach a standard USB Webcam (Logitech 922 is recommended)
 
 # Running
