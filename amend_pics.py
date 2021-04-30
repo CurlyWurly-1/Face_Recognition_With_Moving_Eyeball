@@ -107,8 +107,7 @@ def main_loop():
         known_face_metadata  = new_known_face_metadata
 
     save_known_faces()
-
-
+    
 
 #****************************************************************************************************
 # S T A R T   O F   P R O G R A M
