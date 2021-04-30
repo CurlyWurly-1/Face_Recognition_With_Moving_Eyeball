@@ -203,11 +203,11 @@ def main_loop():
     else:
         # Accessing the camera with OpenCV on a laptop just requires passing in the number of the webcam (usually 0)
         # Note: You can pass in a filename instead if you want to process a video file instead of a live camera stream
-        detectScale = 3        # Higher means more detail but slower
-        frameWidth  = 1280
-        frameHeight = 720
-#        frameWidth  = 800
-#        frameHeight = 600
+        detectScale = 2.5        # Higher means more detail but slower
+#        frameWidth  = 1280
+#        frameHeight = 720
+        frameWidth  = 800
+        frameHeight = 600
 
         video_capture = cv2.VideoCapture(0)
 #        video_capture = cv2.VideoCapture(0, cv2.CAP_DSHOW)     # Use this for windows
