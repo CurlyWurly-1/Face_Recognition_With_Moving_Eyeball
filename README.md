@@ -15,7 +15,11 @@ The changes I have done are
  - Create a  python program  called "amend_pics.py" which is used to manage the images harvested by the "doorcam.py" program i.e. images can be renamed or deleted. Whatever name is given to the image, the speech processing part uses it to speak the name of the image whenever it is recognised.   
  - Create an Arduino program called "JETSON_NANO_SERIAL_RECEIVE" which deciphers 2 numeric values from UART messages and uses them to control the position of 2 servos  
 
-The 2GB Jetson nano will work, but if are more serious with experimenting with vision AI, you are better off getting a Xavier NX or AGX 
+The 2GB Jetson nano will work, but if you want acceptable performance, you are better off getting a Xavier NX or AGX. This allows you to set a lower value for "detectScope" which means a face can be recognised further away from the camera. The problem with doing this is that to double the performance, it seems you have to spend 3 times as much on the device!!
+
+ 
+ - for a Xavier AGX, setting the "DetectScope" variable to a value of 1.5 -   allows for 3 frames per second,  with recognition starting about 4 metres from the camera
+ - for a Jetso Nano (2GB), setting the "DetectScope" variable to a value of 3 -   allows for 2.5 frames per second,  with recognition starting about 2.5 metres from the camera
 
 # SETUP
 
