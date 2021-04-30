@@ -20,7 +20,7 @@ The 2GB Jetson nano will work, but if you want acceptable performance, you are b
 
  
  - for a Xavier AGX, setting the "DetectScope" variable to a value of 1.5 -   allows for 3 frames per second,  with recognition starting about 4 metres from the camera
- - for a Jetso Nano (2GB), setting the "DetectScope" variable to a value of 3 -   allows for 2.5 frames per second,  with recognition starting about 2.5 metres from the camera
+ - for a Jetso Nano (2GB), setting the "DetectScope" variable to a value of 2.5 -   allows for 3.5 frames per second,  with recognition starting about 1.5 metres from the camera
 
 # SETUP
 
