@@ -19,7 +19,7 @@ The changes I have done are
 The 2GB Jetson nano will work, but if you want acceptable performance, you are better off getting a Xavier NX or AGX. This allows you to set a lower value for "detectScope" which means a face can be recognised further away from the camera. The problem with doing this is that to double the performance, it seems you have to spend 5 times as much on the device!!
 
  
- - for a Xavier AGX, setting the "DetectScope" variable to a value of 1.5 -   allows for 3 frames per second,  with recognition starting about 4 metres from the camera
+ - for a Xavier AGX, setting the "DetectScope" variable to a value of 1.5 -   allows for 5 frames per second,  with recognition starting about 4 metres from the camera
  - for a Jetso Nano (2GB), setting the "DetectScope" variable to a value of 2.5 -   allows for 3.5 frames per second,  with recognition starting about 1.5 metres from the camera
 
 # SETUP
