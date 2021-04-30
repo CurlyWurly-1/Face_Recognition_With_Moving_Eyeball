@@ -7,6 +7,8 @@ import platform
 import pickle
 import os
 import SerialModule as sv
+from subprocess import Popen
+import time
 
 from gtts import gTTS
 from playsound import playsound
@@ -22,10 +24,19 @@ known_face_encodings = []
 known_face_metadata = []
 
 
+
 #****************************************************************************************************
-# say_hi_internet
+# say_background
 #****************************************************************************************************
-def say_hi_internet(name):
+def say_background(text):
+#    p1 = Popen(['python', 'speak.py', text,])    # For windows
+    p1 = Popen(['python3', 'speak.py', text,])    # For Jetson Nano
+
+
+#****************************************************************************************************
+# say_foreground
+#****************************************************************************************************
+def say_foreground(name):
     try:
         os.remove("welcome1.mp3")
     except:
@@ -140,6 +151,7 @@ def lookup_known_face(face_encoding):
     See if this is a face we already have in our face list
     """
     metadata = None
+    new = False
 
     # If our known face list is empty, just return nothing since we can't possibly have seen this face.
     if len(known_face_encodings) == 0:
@@ -172,8 +184,11 @@ def lookup_known_face(face_encoding):
         if datetime.now() - metadata["first_seen_this_interaction"] > timedelta(minutes=5):
             metadata["first_seen_this_interaction"] = datetime.now()
             metadata["seen_count"] += 1
+            new = True
+        else:
+            new = False
 
-    return metadata
+    return metadata, new
 
 
 #****************************************************************************************************
@@ -188,7 +203,7 @@ def main_loop():
     else:
         # Accessing the camera with OpenCV on a laptop just requires passing in the number of the webcam (usually 0)
         # Note: You can pass in a filename instead if you want to process a video file instead of a live camera stream
-        detectScale = 4       # Higher means more detail but slower
+        detectScale = 3        # Higher means more detail but slower
         frameWidth  = 1280
         frameHeight = 720
 #        frameWidth  = 800
@@ -201,6 +216,7 @@ def main_loop():
 
     # Track how long since we last saved a copy of our known faces to disk as a backup.
     number_of_faces_since_save = 0
+    pTime = 0
 
     while True:
         # Grab a single frame of video
@@ -221,9 +237,10 @@ def main_loop():
         # Loop through each detected face and see if it is one we have seen before
         # If so, we'll give it a label that we'll draw on top of the video.
         face_labels = []
+        new = False
         for face_location, face_encoding in zip(face_locations, face_encodings):
             # See if this face is in our list of known faces.
-            metadata = lookup_known_face(face_encoding)
+            metadata, new = lookup_known_face(face_encoding)
 
             # If we found the face, label the face with some useful information.
             if metadata is not None:
@@ -234,8 +251,9 @@ def main_loop():
                 except KeyError as e:
                     face_name = '?'
                     pass
-                if activeSeconds < 4 :
-                    say_hi_internet(face_name)
+                if new is True:
+                    say_background("Hi " + face_name +", Nice to see you")
+
                 face_label = f"{face_name} at door {int(time_at_door.total_seconds())}s"
 
             # If this is a brand new face, add it to our list of known faces
@@ -256,9 +274,13 @@ def main_loop():
         for (top, right, bottom, left), face_label in zip(face_locations, face_labels):
             # Scale back up face locations since the frame we detected in was scaled to 1/4 size
             top    *= detectScale
+            top     = int(top)
             right  *= detectScale
+            right   = int(right)
             bottom *= detectScale
+            bottom  = int(bottom)
             left   *= detectScale
+            left    = int(left)
             FaceMidDiffPan  = ( left   + ( ( right - left   ) / 2 ) - ( frameWidth  / 2 ) ) * 45 / ( frameWidth  / 2 )  
             FaceMidDiffTilt = ( bottom + ( ( top   - bottom ) / 2 ) - ( frameHeight / 2 ) ) * 45 / ( frameHeight / 2 )
             pan  = 79 - degrees(atan(FaceMidDiffPan  / 90 ) )  # 79 is midpoint Horizontal - lower and it points its right (your left)
@@ -300,7 +322,10 @@ def main_loop():
         if number_of_recent_visitors > 0:
             cv2.putText(frame, "Visitors at Door", (5, 18), cv2.FONT_HERSHEY_DUPLEX, 0.8, (255, 255, 255), 1)
 
-
+        cTime = time.time()
+        fps = 10 / (cTime - pTime)
+        pTime = cTime
+        cv2.putText(frame, str(int(fps)/10), (10, 70), cv2.FONT_HERSHEY_PLAIN, 3, (255, 0, 255), 3)
 
         # Display the final frame of video with boxes drawn around each detected fames
         cv2.imshow('DoorCam with speech - press q to stop', frame)
