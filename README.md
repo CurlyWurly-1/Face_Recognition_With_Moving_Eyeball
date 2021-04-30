@@ -12,6 +12,7 @@ https://medium.com/@ageitgey/build-a-hardware-based-face-recognition-system-for-
 The changes I have done are
  - Create a  python program called "doorcam.py", which is cloned from Adam's code, but amended to handle image names, speech output and UART messaging (To control 2 servos in a dual axis assembly - panning and tilting). 
  - Create a  python program called "SerialModule.py" to control the UART communication 
+ - Create a  python program called "speak.py" to control speach output (To use speech, you need to have an internet connection)  
  - Create a  python program  called "amend_pics.py" which is used to manage the images harvested by the "doorcam.py" program i.e. images can be renamed or deleted. Whatever name is given to the image, the speech processing part uses it to speak the name of the image whenever it is recognised.   
  - Create an Arduino program called "JETSON_NANO_SERIAL_RECEIVE" which deciphers 2 numeric values from UART messages and uses them to control the position of 2 servos  
 
