@@ -4,7 +4,7 @@ They enable:
 - Face recognition from video images seen from a Webcam
 - Speech output (On a Jetson Nano, you have to use a USB speaker)
 - USB Serial comms via USB
-N.B. A separate Arduino board is connected by USB - This Arduino is used just to control 2 servos. These servos move an Eyeball such the eyeball always moves to look at the person's face.   
+N.B. A separate Arduino board is connected by USB - This Arduino is used just to control 2 servos. These servos move an Eyeball such that the eyeball always moves to look at the person's face.   
 
 Please note: Credits for the original "Doorcam.py" program goes to Adam Geitgey. For more info, please follow this link
 https://medium.com/@ageitgey/build-a-hardware-based-face-recognition-system-for-150-with-the-nvidia-jetson-nano-and-python-a25cb8c891fd 
@@ -15,6 +15,7 @@ The changes I have done are
  - Create a  python program  called "amend_pics.py" which is used to manage the images harvested by the "doorcam.py" program i.e. images can be renamed or deleted. Whatever name is given to the image, the speech processing part uses it to speak the name of the image whenever it is recognised.   
  - Create an Arduino program called "JETSON_NANO_SERIAL_RECEIVE" which deciphers 2 numeric values from UART messages and uses them to control the position of 2 servos  
 
+The 2GB Jetson nano will work, but if are more serious with experimenting with vision AI, you are better off getting a Xavier NX or AGX 
 
 # SETUP
 
