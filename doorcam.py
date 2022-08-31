@@ -155,7 +155,7 @@ def lookup_known_face(face_encoding):
 
     # If our known face list is empty, just return nothing since we can't possibly have seen this face.
     if len(known_face_encodings) == 0:
-        return metadata
+        return metadata, new
 
     # Calculate the face distance between the unknown face and every face on in our known face list
     # This will return a floating point number between 0.0 and 1.0 for each known face. The smaller the number,
