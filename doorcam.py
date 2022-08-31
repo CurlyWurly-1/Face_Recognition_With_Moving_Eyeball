@@ -181,7 +181,7 @@ def lookup_known_face(face_encoding):
         # We'll also keep a total "seen count" that tracks how many times this person has come to the door.
         # But we can say that if we have seen this person within the last 5 minutes, it is still the same
         # visit, not a new visit. But if they go away for awhile and come back, that is a new visit.
-        if datetime.now() - metadata["first_seen_this_interaction"] > timedelta(minutes=5):
+        if datetime.now() - metadata["first_seen_this_interaction"] > timedelta(minutes=1):
             metadata["first_seen_this_interaction"] = datetime.now()
             metadata["seen_count"] += 1
             new = True
