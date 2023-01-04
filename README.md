@@ -1,4 +1,4 @@
-# Face_Recognition_Doorcam
+# Face Recognition Doorcam with head "X" and "Y" position sent via USB serial 
 These python programs can be executed on any of the following devices. 
 - Win10 PC
 - Raspberry Pi
