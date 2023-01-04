@@ -46,11 +46,11 @@ You will need to do the following
      - FACE RECOGNITION - From https://medium.com/@ageitgey/build-a-face-recognition-system-for-60-with-the-new-nvidia-jetson-nano-2gb-and-python-46edbddd7264
        - win10 (python 3.11)
          - Install Visual Studio (Community) and ensure you add "visual studio desktop development with c++"
-         - Install cmake using #py -m pip install cmake#
+         - Install cmake using **py -m pip install cmake**
          - Install Dlib (for python 3.11)
-           - Clone the repo using  	#git clone https://github.com/davisking/dlib#
-           - Get inside the directory in cmd using #cd dlib#
-           - Execute dlib setup using #py setup.py install#
+           - Clone the repo using  	**git clone https://github.com/davisking/dlib**
+           - Get inside the directory in cmd using **cd dlib**
+           - Execute dlib setup using **py setup.py install**
 
  - Install face recognition (yes - you do use a "-") 
 	pip install face-recognition
