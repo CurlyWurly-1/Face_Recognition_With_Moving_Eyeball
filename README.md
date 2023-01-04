@@ -12,7 +12,7 @@ The execution of these programs enable:
 N.B. An Arduino executing "JETSON_NANO_SERIAL_RECEIVE.ino" can be used to read the USB serial data so that an eyeball/servo unit can be controlled. The arduino board is connected to your device via a USB cable, and when USB serial data is received by the arduino program code, the  "X" and "Y" data is translated into rotational servo position data, which is then sent to the servos in the eyeball/servo unit. This causes the eyeball to move and it gives the illusion that whenever a person's face is recognised, the eyeball moves and looks at the users face, and at the same time the device talks and says the person's name "hello XXX"  - it is quite spooky. 
 
 
-To install the software, please refer to the section called **SETUP**. There are a few device specific instructions to take of, but hopefully this is made clear enough to follow. 
+To install the software, please refer to the section called **SETUP**. There are a few device specific instructions to take note of, but hopefully all is made clear enough to follow. 
 
 To execute the programs, refer to the section called **Running**
 
