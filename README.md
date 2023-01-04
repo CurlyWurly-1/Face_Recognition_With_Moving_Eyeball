@@ -4,14 +4,17 @@ These python programs can be executed on any of the following devices.
 - Raspberry Pi
 - Jetson Nano.
 
-For whatever device you choose, consider that there are some device specific instructions you need to follow, but these are all identified in the section below called "Setup". 
-
 The execution of these programs enable: 
 - Face recognition from video images seen from a Webcam
 - Speech output (On a Jetson Nano, you have to use a USB speaker)
 - USB Serial comms via USB - The data that is sent contains the "X" and "Y" head position co-ordinates. 
 
 N.B. An Arduino executing "JETSON_NANO_SERIAL_RECEIVE.ino" can be used to read the USB serial data so that an eyeball/servo unit can be controlled. The arduino board is connected to your device via a USB cable, and when USB serial data is received by the arduino program code, the  "X" and "Y" data is translated into rotational servo position data, which is then sent to the servos in the eyeball/servo unit. This causes the eyeball to move and it gives the illusion that whenever a person's face is recognised, the eyeball moves and looks at the users face, and at the same time the device talks and says the person's name "hello XXX"  - it is quite spooky. 
+
+
+To install the software, please refer to the section called "**SETUP**". There are a few device specific instructions to take of, but hopefully this is made clear enoughed "Setup". 
+
+To execute the programs, refer to the section called "**Running**"
 
 N.B. Please note: Credits for the original "Doorcam.py" program goes to Adam Geitgey. For more info, please follow this link
 https://medium.com/@ageitgey/build-a-hardware-based-face-recognition-system-for-150-with-the-nvidia-jetson-nano-and-python-a25cb8c891fd 
