@@ -44,8 +44,19 @@ You will need to do the following
      - NANO text editor (Jetson Nano only)
        - sudo apt-get install nano
      - FACE RECOGNITION - From https://medium.com/@ageitgey/build-a-face-recognition-system-for-60-with-the-new-nvidia-jetson-nano-2gb-and-python-46edbddd7264
-       - sudo apt-get install python3-pip cmake libopenblas-dev liblapack-dev libjpeg-dev
-       - sudo pip3 -v install Cython face_recognition
+       - win10 (python 3.11)
+         - Install Visual Studio (Community) and ensure you add "visual studio desktop development with c++"
+         - Install cmake using #py -m pip install cmake#
+         - Install Dlib (for python 3.11)
+           - Clone the repo using  	#git clone https://github.com/davisking/dlib#
+           - Get inside the directory in cmd using #cd dlib#
+           - Execute dlib setup using #py setup.py install#
+
+ - Install face recognition (yes - you do use a "-") 
+	pip install face-recognition
+       - For Jetson Nano
+         - sudo apt-get install python3-pip cmake libopenblas-dev liblapack-dev libjpeg-dev
+         - sudo pip3 -v install Cython face_recognition
 
      - VSCODE - Do either of these
        - For win10 
