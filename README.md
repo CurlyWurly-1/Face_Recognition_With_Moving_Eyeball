@@ -52,7 +52,7 @@ You will need to do the following
        - cd dlib
        - py setup.py install
        - pip install face-recognition
-   - For Jetson Nano
+   - For Jetson Nano / R.Pi (Raspberry Pi)
      - Follow instructions from https://medium.com/@ageitgey/build-a-hardware-based-face-recognition-system-for-150-with-the-nvidia-jetson-nano-and-python-a25cb8c891fd In summary it is
        - sudo apt-get update
        - sudo apt-get upgrade 
