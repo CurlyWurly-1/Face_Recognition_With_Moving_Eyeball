@@ -25,12 +25,13 @@ The 2GB Jetson nano will work, but if you want acceptable performance, you are b
 # SETUP
 
 You will need to do the following 
- - On your device (Win10 PC or SBC), install software or open a terminal and execute the basic install 
+ - On your device (Win10 PC or SBC), attach a standard USB Webcam (Logitech 922 is recommended)
+ - On your device (Win10 PC or SBC), install software 
    - For win10
      - Download and install latest "python" (3.11?) from https://www.python.org/downloads/ 
      - Download and install "VSCode" from https://code.visualstudio.com/download
      - Download and install "Visual Studio (Community)" **and ensure you add "visual studio desktop development with c++"** from https://visualstudio.microsoft.com/downloads/ 
-     - Execute the following commands in an elevated terminal
+     - Open an elevated CMD terminal (administrator mode) and execute the following commands 
        - pip install pyttsx3
        - pip install gTTs
        - pip install playsound
@@ -49,20 +50,21 @@ You will need to do the following
        - sudo apt-get install espeak
        - sudo pip3 install pyttsx3
        - sudo pip3 install gTTs
-       - Install either of these
-         - sudo pip3 install playsound     (Win10 or Jetson Nano)
-         - sudo apt install mpg123         (This is needed for a R.PI) 
+       - Install one of these (N.B. It depends on if you are using a Jetson Nano or a R.Pi)
+         - For Jetson nano
+           - sudo pip3 install playsound  
+         - For R.Pi
+           - sudo apt install mpg123       
      - SERIAL comms
        - pip3 install pyserial
-       - The following only for Jetson Nano or R.Pi (Win10 is OK)
-         - sudo chmod 666 /dev/ttyUSB0
-         - sudo adduser pete dialout
+       - sudo chmod 666 /dev/ttyUSB0
+       - sudo adduser pete dialout
      - NANO text editor (Jetson Nano only)
        - sudo apt-get install nano
      - FACE RECOGNITION - From https://medium.com/@ageitgey/build-a-face-recognition-system-for-60-with-the-new-nvidia-jetson-nano-2gb-and-python-46edbddd7264
        - sudo apt-get install python3-pip cmake libopenblas-dev liblapack-dev libjpeg-dev
        - sudo pip3 -v install Cython face_recognition
-     - VSCODE - Do either of these
+     - VSCODE - Install one of these (N.B. It depends on if you are using a Jetson Nano or a R.Pi)
        - For Jetson nano
          - Install VSCode from https://code.visualstudio.com/download
          - Download the ".deb" file called  "ARM 64"
@@ -71,8 +73,6 @@ You will need to do the following
        - For R.Pi 
          - Download and use Pycharm
        
-
-- On your device, attach a standard USB Webcam (Logitech 922 is recommended)
 
 # Running
  - On your device, open a terminal 
