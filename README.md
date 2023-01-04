@@ -25,32 +25,33 @@ The 2GB Jetson nano will work, but if you want acceptable performance, you are b
 # SETUP
 
 You will need to do the following 
- - On your device (Win10 PC or SBC), open a terminal and execute the basic install e.g.
-  - win10
-    - Download and install latest python (3.11?) from https://www.python.org/downloads/ 
-    - Download and install Visual Studio (Community) and ensure you add "visual studio desktop development with c++" from https://visualstudio.microsoft.com/downloads/ 
-    - Execute the following commands in an elevated terminal
-      - pip install pyttsx3
-      - pip install gTTs
-      - pip install playsound
-      - pip install pyserial
-      - pip install opencv-python
-      - py -m pip install cmake
-      - git clone https://github.com/davisking/dlib
-      - cd dlib
-      - py setup.py install
-      - pip install face-recognition
-  - For Jetson Nano
-    - Follow instructions from https://medium.com/@ageitgey/build-a-hardware-based-face-recognition-system-for-150-with-the-nvidia-jetson-nano-and-python-a25cb8c891fd In summary it is
-     - sudo apt-get update
-     - sudo apt-get upgrade 
-     - sudo apt-get install python3-pip
-     - sudo apt-get install espeak
-     - sudo pip3 install pyttsx3
-     - sudo pip3 install gTTs
-     - Install either of these
-       - sudo pip3 install playsound     (Win10 or Jetson Nano)
-       - sudo apt install mpg123         (This is needed for a R.PI) 
+ - On your device (Win10 PC or SBC), install software or open a terminal and execute the basic install 
+   - For win10
+     - Download and install latest "python" (3.11?) from https://www.python.org/downloads/ 
+     - Download and install "VSCode" from https://code.visualstudio.com/download
+     - Download and install "Visual Studio (Community)" ##and ensure you add "visual studio desktop development with c++"## from https://visualstudio.microsoft.com/downloads/ 
+     - Execute the following commands in an elevated terminal
+       - pip install pyttsx3
+       - pip install gTTs
+       - pip install playsound
+       - pip install pyserial
+       - pip install opencv-python
+       - py -m pip install cmake
+       - git clone https://github.com/davisking/dlib
+       - cd dlib
+       - py setup.py install
+       - pip install face-recognition
+   - For Jetson Nano
+     - Follow instructions from https://medium.com/@ageitgey/build-a-hardware-based-face-recognition-system-for-150-with-the-nvidia-jetson-nano-and-python-a25cb8c891fd In summary it is
+       - sudo apt-get update
+       - sudo apt-get upgrade 
+       - sudo apt-get install python3-pip
+       - sudo apt-get install espeak
+       - sudo pip3 install pyttsx3
+       - sudo pip3 install gTTs
+       - Install either of these
+         - sudo pip3 install playsound     (Win10 or Jetson Nano)
+         - sudo apt install mpg123         (This is needed for a R.PI) 
      - SERIAL comms
        - pip3 install pyserial
        - The following only for Jetson Nano or R.Pi (Win10 is OK)
@@ -59,22 +60,9 @@ You will need to do the following
      - NANO text editor (Jetson Nano only)
        - sudo apt-get install nano
      - FACE RECOGNITION - From https://medium.com/@ageitgey/build-a-face-recognition-system-for-60-with-the-new-nvidia-jetson-nano-2gb-and-python-46edbddd7264
-       - win10 (python 3.11)
-         - Install Visual Studio (Community) and ensure you add "visual studio desktop development with c++"
-         - Install cmake using **py -m pip install cmake**
-         - Install Dlib (for python 3.11)
-           - Clone the repo using  	**git clone https://github.com/davisking/dlib**
-           - Get inside the directory in cmd using **cd dlib**
-           - Execute dlib setup using **py setup.py install**
-           - Install face recognition (yes - you do use a "-") using    **pip install face-recognition**
-       - For Jetson Nano
-         - sudo apt-get install python3-pip cmake libopenblas-dev liblapack-dev libjpeg-dev
-         - sudo pip3 -v install Cython face_recognition
-
+       - sudo apt-get install python3-pip cmake libopenblas-dev liblapack-dev libjpeg-dev
+       - sudo pip3 -v install Cython face_recognition
      - VSCODE - Do either of these
-       - For win10 
-         - Install VSCode from https://code.visualstudio.com/download
-         - Download for Win10 and install it
        - For Jetson nano
          - Install VSCode from https://code.visualstudio.com/download
          - Download the ".deb" file called  "ARM 64"
