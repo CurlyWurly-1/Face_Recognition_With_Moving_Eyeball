@@ -4,15 +4,14 @@ These python programs can be executed on any of the following devices.
 - Raspberry Pi
 - Jetson Nano.
 
-N.B. There are some device specific instructions but they are all highlighted in the section below called "Setup". 
+For whatever device you choose, consider that there are some device specific instructions you need to follow, but these are all identified in the section below called "Setup". 
 
 The execution of these programs enable: 
 - Face recognition from video images seen from a Webcam
 - Speech output (On a Jetson Nano, you have to use a USB speaker)
-- USB Serial comms via USB to control something
-N.B. A separate Arduino board is connected by USB - This Arduino is used just to control 2 servos. These servos move an Eyeball such that the eyeball always moves to look at the person's face.   
+- USB Serial comms via USB - The data that is sent contains the "X" and "Y" head position co-ordinates. N.B. An arduino can be used here to read these co-ordinates so that an eyeball/servo unit can be controlled. The Arduino program code is included in this repo and it is called "JETSON_NANO_SERIAL_RECEIVE.ino". The arduino board is connected to your device via a USB cable and once it receives the USB serial data, the arduino board code translates it to servo positions so that signals to the eyeball/servo unit. The eyeball moves and gives the illusion that whenever a user's face is recognised, the eyeball moves and looks at the users face - spooky. 
 
-Please note: Credits for the original "Doorcam.py" program goes to Adam Geitgey. For more info, please follow this link
+N.B. Please note: Credits for the original "Doorcam.py" program goes to Adam Geitgey. For more info, please follow this link
 https://medium.com/@ageitgey/build-a-hardware-based-face-recognition-system-for-150-with-the-nvidia-jetson-nano-and-python-a25cb8c891fd 
 
 The changes which I have applied include:
@@ -21,9 +20,6 @@ The changes which I have applied include:
  - Create a  python program called "speak.py" to control speach output (To use speech, you need to have an internet connection)  
  - Create a  python program  called "amend_pics.py" which is used to manage the images harvested by the "doorcam.py" program i.e. images can be renamed or deleted. Whatever name is given to the image, the speech processing part uses it to speak the name of the image whenever it is recognised.   
  - Create an Arduino program called "JETSON_NANO_SERIAL_RECEIVE" which deciphers 2 numeric values from UART messages and uses them to control the position of 2 servos 
-
-N.B. Be aware that the device to receive the USB serial data is not detailed in this repo. It is up to the reader to connect the device of their choice. In my case, I used an Arduino which was programmed to read the USB serial data and control an eyeball via two servos. The USB serial data contains "X" and "Y" head position co-ordinates and the arduino translated these co-ordinates so that the eyeball moved up/down and left/right. After some tuning of value mappings, and the appropriate positioning of the eyeball/servo device, quite a realistic effect was achieved. Once a user's face was recognised, the eyeball moved and gave the illusion it was tracking the face.
-
 
 The 2GB Jetson nano will work, but if you want acceptable performance, you are better off getting a Xavier NX or AGX. This allows you to set a lower value for "detectScope" which means a face can be recognised further away from the camera. The problem with doing this is that to double the performance, it seems you have to spend 5 times as much on the device!!
 
