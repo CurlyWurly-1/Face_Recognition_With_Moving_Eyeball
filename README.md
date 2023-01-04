@@ -1,6 +1,7 @@
 # Face_Recognition_Doorcam
 This is a set of modified python programs that can be executed on a Win10 PC, Raspberry Pi or Jetson Nano.
-They enable: 
+
+The execution of these programs enable: 
 - Face recognition from video images seen from a Webcam
 - Speech output (On a Jetson Nano, you have to use a USB speaker)
 - USB Serial comms via USB
