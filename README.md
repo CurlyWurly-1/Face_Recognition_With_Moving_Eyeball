@@ -9,7 +9,9 @@ For whatever device you choose, consider that there are some device specific ins
 The execution of these programs enable: 
 - Face recognition from video images seen from a Webcam
 - Speech output (On a Jetson Nano, you have to use a USB speaker)
-- USB Serial comms via USB - The data that is sent contains the "X" and "Y" head position co-ordinates. N.B. An arduino can be used here to read these co-ordinates so that an eyeball/servo unit can be controlled. The Arduino program code is included in this repo and it is called "JETSON_NANO_SERIAL_RECEIVE.ino". The arduino board is connected to your device via a USB cable and once it receives the USB serial data, the arduino board code translates it to servo positions so that signals to the eyeball/servo unit. The eyeball moves and gives the illusion that whenever a user's face is recognised, the eyeball moves and looks at the users face - spooky. 
+- USB Serial comms via USB - The data that is sent contains the "X" and "Y" head position co-ordinates. 
+
+N.B. An Arduino executing "JETSON_NANO_SERIAL_RECEIVE.ino" can be used to read the USB serial data so that an eyeball/servo unit can be controlled. The arduino board is connected to your device via a USB cable, and when USB serial data is received by the arduino program code, the  "X" and "Y" data is translated into rotational servo position data, which is then sent to the servos in the eyeball/servo unit. This causes the eyeball to move and it gives the illusion that whenever a person's face is recognised, the eyeball moves and looks at the users face, and at the same time the device talks and says the person's name "hello XXX"  - it is quite spooky. 
 
 N.B. Please note: Credits for the original "Doorcam.py" program goes to Adam Geitgey. For more info, please follow this link
 https://medium.com/@ageitgey/build-a-hardware-based-face-recognition-system-for-150-with-the-nvidia-jetson-nano-and-python-a25cb8c891fd 
