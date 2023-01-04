@@ -1,8 +1,10 @@
 # Face_Recognition_Doorcam
-These python programs can be executed on any of the following. You just need to follow the device specific instructions as detailed below in "Setup": 
+These python programs can be executed on any of the following devices. 
 - Win10 PC
 - Raspberry Pi
 - Jetson Nano.
+
+N.B. There are some device specific instructions but they are all highlighted in the section below called "Setup". 
 
 The execution of these programs enable: 
 - Face recognition from video images seen from a Webcam
