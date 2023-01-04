@@ -1,5 +1,8 @@
 # Face_Recognition_Doorcam
-This is a set of modified python programs that can be executed on a Win10 PC, Raspberry Pi or Jetson Nano.
+These python programs can be executed on: 
+- Win10 PC
+- Raspberry Pi
+- Jetson Nano.
 
 The execution of these programs enable: 
 - Face recognition from video images seen from a Webcam
@@ -10,12 +13,15 @@ N.B. A separate Arduino board is connected by USB - This Arduino is used just to
 Please note: Credits for the original "Doorcam.py" program goes to Adam Geitgey. For more info, please follow this link
 https://medium.com/@ageitgey/build-a-hardware-based-face-recognition-system-for-150-with-the-nvidia-jetson-nano-and-python-a25cb8c891fd 
 
-The changes I have done are
+The changes which I have applied include:
  - Create a  python program called "doorcam.py", which is cloned from Adam's code, but amended to handle image names, speech output and UART messaging (To control 2 servos in a dual axis assembly - panning and tilting). 
  - Create a  python program called "SerialModule.py" to control the UART communication 
  - Create a  python program called "speak.py" to control speach output (To use speech, you need to have an internet connection)  
  - Create a  python program  called "amend_pics.py" which is used to manage the images harvested by the "doorcam.py" program i.e. images can be renamed or deleted. Whatever name is given to the image, the speech processing part uses it to speak the name of the image whenever it is recognised.   
- - Create an Arduino program called "JETSON_NANO_SERIAL_RECEIVE" which deciphers 2 numeric values from UART messages and uses them to control the position of 2 servos  
+ - Create an Arduino program called "JETSON_NANO_SERIAL_RECEIVE" which deciphers 2 numeric values from UART messages and uses them to control the position of 2 servos 
+
+Be aware that the device to receive the USB serial data is not detailed in this repo. It is up to the reader to connect the device of their choice e.g. An Arduino which is programmed to read USB serial data and process it. For the project attached to his repo, I also programmed an arduino to read the X and Y "head" position co-ordinates that were transmitted over the USB serial. This arduino used the co-ordinates to control two servos which moved an eyeball up/down and left/right. After some tuning of value mapping and the appropriate positioning of the eyeball, quite a realistic effect was achieved with the eyeball seeming to move and track the users face after it was recognised !!  
+
 
 The 2GB Jetson nano will work, but if you want acceptable performance, you are better off getting a Xavier NX or AGX. This allows you to set a lower value for "detectScope" which means a face can be recognised further away from the camera. The problem with doing this is that to double the performance, it seems you have to spend 5 times as much on the device!!
 
