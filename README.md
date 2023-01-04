@@ -26,7 +26,22 @@ The 2GB Jetson nano will work, but if you want acceptable performance, you are b
 
 You will need to do the following 
  - On your device (Win10 PC or SBC), open a terminal and execute the basic install e.g.
-   - Follow instructions from https://medium.com/@ageitgey/build-a-hardware-based-face-recognition-system-for-150-with-the-nvidia-jetson-nano-and-python-a25cb8c891fd In summary it is
+  - win10
+    - Download and install latest python (3.11?) from https://www.python.org/downloads/ 
+    - Download and install Visual Studio (Community) and ensure you add "visual studio desktop development with c++" from https://visualstudio.microsoft.com/downloads/ 
+    - Execute the following commands in an elevated terminal
+      - pip install pyttsx3
+      - pip install gTTs
+      - pip install playsound
+      - pip install pyserial
+      - pip install opencv-python
+      - py -m pip install cmake
+      - git clone https://github.com/davisking/dlib
+      - cd dlib
+      - py setup.py install
+      - pip install face-recognition
+  - For Jetson Nano
+    - Follow instructions from https://medium.com/@ageitgey/build-a-hardware-based-face-recognition-system-for-150-with-the-nvidia-jetson-nano-and-python-a25cb8c891fd In summary it is
      - sudo apt-get update
      - sudo apt-get upgrade 
      - sudo apt-get install python3-pip
@@ -51,9 +66,7 @@ You will need to do the following
            - Clone the repo using  	**git clone https://github.com/davisking/dlib**
            - Get inside the directory in cmd using **cd dlib**
            - Execute dlib setup using **py setup.py install**
-
- - Install face recognition (yes - you do use a "-") 
-	pip install face-recognition
+           - Install face recognition (yes - you do use a "-") using    **pip install face-recognition**
        - For Jetson Nano
          - sudo apt-get install python3-pip cmake libopenblas-dev liblapack-dev libjpeg-dev
          - sudo pip3 -v install Cython face_recognition
