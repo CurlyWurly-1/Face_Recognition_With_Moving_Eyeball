@@ -29,7 +29,7 @@ You will need to do the following
    - For win10
      - Download and install latest "python" (3.11?) from https://www.python.org/downloads/ 
      - Download and install "VSCode" from https://code.visualstudio.com/download
-     - Download and install "Visual Studio (Community)" ##and ensure you add "visual studio desktop development with c++"## from https://visualstudio.microsoft.com/downloads/ 
+     - Download and install "Visual Studio (Community)" **and ensure you add "visual studio desktop development with c++"** from https://visualstudio.microsoft.com/downloads/ 
      - Execute the following commands in an elevated terminal
        - pip install pyttsx3
        - pip install gTTs
