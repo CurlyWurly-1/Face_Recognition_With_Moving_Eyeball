@@ -59,6 +59,9 @@ You will need to do the following
        - sudo apt-get install python3-pip
        - sudo apt-get install espeak
        - sudo pip3 install pyttsx3
+       - pip3 install PyAudio
+       - sudo apt-get install sox
+       - sudo apt-get install libsox-fmt-all
        - sudo pip3 install gTTs
        - Install one of these (N.B. It depends on if you are using a Jetson Nano or a R.Pi)
          - For Jetson nano
