@@ -44,6 +44,7 @@ You will need to do the following
      - Open an elevated CMD terminal (administrator mode) and execute the following commands 
        - pip install pyttsx3
        - pip install gTTs
+       - pip install --upgrade setuptools wheel
        - pip install playsound
        - pip install pyserial
        - pip install opencv-python
