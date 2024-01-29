@@ -37,7 +37,7 @@ The 2GB Jetson nano will work, but if you want acceptable performance, you are b
 You will need to do the following 
  - On your device (Win10 PC or SBC), attach a standard USB Webcam (Logitech 922 is recommended)
  - On your device (Win10 PC or SBC), install software 
-   - For win10
+   - For win10 **with a Nvidia GPU (N.B. RTX2070 super gives good performance)** 
      - Download and install latest "python" (3.11?) from https://www.python.org/downloads/ 
      - Download and install "VSCode" from https://code.visualstudio.com/download
      - Download and install "Visual Studio Build Tools 2019" from https://visualstudio.microsoft.com/vs/older-downloads/
