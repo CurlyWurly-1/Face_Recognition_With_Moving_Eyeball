@@ -31,6 +31,7 @@ The 2GB Jetson nano will work, but if you want acceptable performance, you are b
  
  - for a Xavier AGX, setting the "DetectScope" variable to a value of 1.5 -   allows for 5 frames per second,  with recognition starting about 4 metres from the camera
  - for a Jetso Nano (2GB), setting the "DetectScope" variable to a value of 2.5 -   allows for 3.5 frames per second,  with recognition starting about 1.5 metres from the camera
+ - For an I5-6400 CPU in a H110M motherboard (released circa 2015), with 32GB ram and a GPU of RTX2070 super, the performance is pretty good! Certainly a lot better that an equivalent cost "Orin" dev board of course. Remember that the Orin/Nano boards are all about size and less power. Put it this way, the power requirements for a desktop are at least ten times more !! 
 
 # SETUP
 
