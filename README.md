@@ -40,7 +40,8 @@ You will need to do the following
    - For win10
      - Download and install latest "python" (3.11?) from https://www.python.org/downloads/ 
      - Download and install "VSCode" from https://code.visualstudio.com/download
-     - Download and install "Visual Studio (Community)" **and ensure you add "visual studio desktop development with c++"** from https://visualstudio.microsoft.com/downloads/
+     - Download and install "Visual Studio Build Tools 2019" from https://visualstudio.microsoft.com/vs/older-downloads/
+       **and ensure you select add "Desktop development with C++"**
      - Install CUDA from Nvidia (if you are using Nvidia GPU) 
      - Follow this regarding the system variables and the files you need to download/copy to the otehr library 
        - https://medium.com/geekculture/install-cuda-and-cudnn-on-windows-linux-52d1501a8805#3e72
@@ -54,7 +55,11 @@ You will need to do the following
        - py -m pip install cmake
        - git clone https://github.com/davisking/dlib
        - cd dlib
-       - py setup.py install
+       - mkdir build
+       - cd build
+       - cmake .
+       - cd ..
+       - python setup.py install
        - pip install face-recognition
    - For Jetson Nano / R.Pi (Raspberry Pi)
      - Follow instructions from https://medium.com/@ageitgey/build-a-hardware-based-face-recognition-system-for-150-with-the-nvidia-jetson-nano-and-python-a25cb8c891fd In summary it is
