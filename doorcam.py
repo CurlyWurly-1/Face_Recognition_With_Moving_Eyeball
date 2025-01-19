@@ -12,25 +12,35 @@ import time
 
 from gtts import gTTS
 from playsound import playsound
-#import pyttsx3
 
-# Set this depending on your camera type:
-# - True = Raspberry Pi 2.x camera module
-# - False = USB webcam or other USB video input (like an HDMI capture device)
-USING_RPI_CAMERA_MODULE = False
 
-# Our list of known face encodings and a matching list of metadata about each face.
+# Accessing the camera with OpenCV on a laptop just requires passing in the number of the webcam (usually 0)
+# Note: You can pass in a filename instead if you want to process a video file instead of a live camera stream  
+# N.B.  With detectScale = 2.5 and 1280/720 - FPS = 10
+# N.B.  With detectScale = 1   and 1280/720 - FPS = 7.5
+detectScale = 2.5        # Higher means more detail but slower
+#detectScale = 1        # Higher means more detail but slower
+
+frameWidth  = 1280
+frameHeight = 720
+#frameWidth  = 800
+#frameHeight = 600
+
 known_face_encodings = []
-known_face_metadata = []
+known_face_metadata  = []
 
+
+################################################################
+# F U N C T I O N S 
+################################################################
 
 
 #****************************************************************************************************
 # say_background
 #****************************************************************************************************
 def say_background(text):
-#    p1 = Popen(['python', 'speak.py', text,])    # For windows
-    p1 = Popen(['python3', 'speak.py', text,])    # For Jetson Nano
+    p1 = Popen(['python', 'speak.py', text,])    # For windows         #PM1
+#    p1 = Popen(['python3', 'speak.py', text,])    # For Jetson Nano   #PM1
 
 
 #****************************************************************************************************
@@ -104,7 +114,7 @@ def load_known_faces():
 #****************************************************************************************************
 # get_jetson_gstreamer_source
 #   This method is NOT needed if you are using a webcam. 
-#   This method is only used if you are using he R.PI camera
+#   This method is only used if you are using the R.PI camera
 #****************************************************************************************************
 def get_jetson_gstreamer_source(capture_width=1280, capture_height=720, display_width=1280, display_height=720, framerate=60, flip_method=0):
 
@@ -151,7 +161,7 @@ def lookup_known_face(face_encoding):
     See if this is a face we already have in our face list
     """
     metadata = None
-    new = False
+    new      = False
 
     # If our known face list is empty, just return nothing since we can't possibly have seen this face.
     if len(known_face_encodings) == 0:
@@ -195,35 +205,31 @@ def lookup_known_face(face_encoding):
 # main_loop
 #****************************************************************************************************
 def main_loop():
-    global ser1
-    # Get access to the webcam. The method is different depending on if you are using a Raspberry Pi camera or USB input.
-    if USING_RPI_CAMERA_MODULE:
-        # Accessing the camera with OpenCV on a Jetson Nano requires gstreamer with a custom gstreamer source string
-        video_capture = cv2.VideoCapture(get_jetson_gstreamer_source(), cv2.CAP_GSTREAMER)
-    else:
-        # Accessing the camera with OpenCV on a laptop just requires passing in the number of the webcam (usually 0)
-        # Note: You can pass in a filename instead if you want to process a video file instead of a live camera stream
-        detectScale = 2.5        # Higher means more detail but slower
-#        frameWidth  = 1280
-#        frameHeight = 720
-        frameWidth  = 800
-        frameHeight = 600
 
-        video_capture = cv2.VideoCapture(0)
-#        video_capture = cv2.VideoCapture(0, cv2.CAP_DSHOW)     # Use this for windows
-        video_capture.set(3, frameWidth)
-        video_capture.set(4, frameHeight)
+    global ser1
+    global video_capture
+    global frameWidth
+    global frameHeight
+    global detectScale
+
+    frameNames = []
+    recentVisitorNames = []
 
     # Track how long since we last saved a copy of our known faces to disk as a backup.
     number_of_faces_since_save = 0
     pTime = 0
+
+    print("Camera started")
 
     while True:
         # Grab a single frame of video
         ret, frame = video_capture.read()
 
         # Resize frame of video to 1/4 size for faster face recognition processing
-        small_frame = cv2.resize(frame, (0, 0), fx=(1/detectScale), fy=(1/detectScale))
+        if detectScale == 1:
+            small_frame = frame
+        else:
+            small_frame = cv2.resize(frame, (0, 0), fx=(1/detectScale), fy=(1/detectScale))
 
         # Convert the image from BGR color (which OpenCV uses) to RGB color (which face_recognition uses)
 #        rgb_small_frame = small_frame[:, :, ::-1]
@@ -237,6 +243,7 @@ def main_loop():
 
         # Loop through each detected face and see if it is one we have seen before
         # If so, we'll give it a label that we'll draw on top of the video.
+        frameNames  = []
         face_labels = []
         new = False
         for face_location, face_encoding in zip(face_locations, face_encodings):
@@ -253,7 +260,19 @@ def main_loop():
                     face_name = '?'
                     pass
                 if new is True:
-                    say_background("Hi " + face_name +", Nice to see you")
+# Check if this is a repeat "face_name" in this frame
+                    if face_name in frameNames:
+                        pass
+                    else:
+                        frameNames.append(face_name)
+# Check if this is a repeat "face_name" in recent times (see below)
+# N.B. There can be multiple images which are tagged with the same name 
+                        if face_name in recentVisitorNames:
+                            pass        
+                        else:
+#######################################################################################
+                            say_background("Hi " + face_name +", Nice to see you")
+#######################################################################################
 
                 face_label = f"{face_name} at door {int(time_at_door.total_seconds())}s"
 
@@ -285,11 +304,12 @@ def main_loop():
             FaceMidDiffPan  = ( left   + ( ( right - left   ) / 2 ) - ( frameWidth  / 2 ) ) * 45 / ( frameWidth  / 2 )  
             FaceMidDiffTilt = ( bottom + ( ( top   - bottom ) / 2 ) - ( frameHeight / 2 ) ) * 45 / ( frameHeight / 2 )
             pan  = 79 - degrees(atan(FaceMidDiffPan  / 90 ) )  # 79 is midpoint Horizontal - lower and it points its right (your left)
-            tilt = 55 + degrees(atan(FaceMidDiffTilt / 90 ) )  # 83 is midpoint vertical   - lower means it points more up
-
-# ******************************************************
-            sv.senddata(ser1 , [int(pan), int(tilt)], 3)
-# ******************************************************
+            tilt = 55 + degrees(atan(FaceMidDiffTilt / 90 ) )  # 55 is midpoint vertical   - lower means it points more up
+            lr = int((int(pan-78)) / 1.5 )
+            ud = int( (int(0 - (tilt-60))) / 3 ) 
+#######################################################################################
+            sv.senddata(ser1 , [int(lr), int(ud), 70, 55] )
+#######################################################################################
 
             # Draw a box around the face
             cv2.rectangle(frame, (left, top), (right, bottom), (0, 0, 255), 2)
@@ -300,6 +320,7 @@ def main_loop():
 
         # Display recent visitor images
         number_of_recent_visitors = 0
+        recentVisitorNames = []
         for metadata in known_face_metadata:
             # If we have seen this person in the last minute, draw their image
             if datetime.now() - metadata["last_seen"] < timedelta(seconds=10) and metadata["seen_frames"] > 5:
@@ -312,6 +333,7 @@ def main_loop():
                 visits = metadata['seen_count']
                 try:
                     face_name = f"{metadata['face_name']}"
+                    recentVisitorNames.append(face_name)
                 except KeyError as e:
                     face_name = '?'
                     pass
@@ -352,6 +374,28 @@ def main_loop():
 # S T A R T   O F   P R O G R A M
 #****************************************************************************************************
 if __name__ == "__main__":
-    ser1 = sv.initConnection('/dev/ttyUSB0', 9600)
+
+# Set the "USING_RPI_CAMERA_MODULE" variable depending on your camera type:
+#    USING_RPI_CAMERA_MODULE = True      # Raspberry Pi 2.x camera module
+    USING_RPI_CAMERA_MODULE = False     # USB webcam or other USB video input (like an HDMI capture device)
+
+# For a camera module, accessing the camera with OpenCV requires gstreamer with a custom gstreamer source string
+    if USING_RPI_CAMERA_MODULE:
+        video_capture = cv2.VideoCapture(get_jetson_gstreamer_source(), cv2.CAP_GSTREAMER)
+
+# For a USB webcam, accessing the camera with OpenCV is native
+    else:
+#        video_capture = cv2.VideoCapture(0)                                             
+        video_capture = cv2.VideoCapture(0, cv2.CAP_DSHOW)     # Use this for Windows  
+        video_capture.set(3, frameWidth)
+        video_capture.set(4, frameHeight)
+
+# Set up serial comms (for servos)
+#    ser1 = sv.initConnection('/dev/ttyUSB0', 115200)   # This is for R.Pi / Jetson 
+    ser1 = sv.initConnection('COM9', 115200)            # This is for windows
+
+# Get a list of known face encodings with a matching list of metadata about each face.
     load_known_faces()
+
+# Main program code
     main_loop()
