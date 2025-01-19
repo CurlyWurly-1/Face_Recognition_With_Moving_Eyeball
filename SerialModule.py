@@ -19,23 +19,34 @@ def initConnection(portNo, baudRate):
     except:
         print("Not Connected")
 
-
-def senddata(serial_device, data, digits):
-    myString = "#"
+def senddata(serial_device, data, digits=3):
+# eyes closed   ser1.write(b'<000,000,090,090>') 
+# eyes open     ser1.write(b'<000,000,070,055>')
+    first = True
+    myString = ""
     for d in data:
+        if first == True:
+            myString = "<"
+            first = False
+        else:
+            myString += ","
         myString += str(d).zfill(digits)
+    myString += ">"
     try:
         serial_device.write(myString.encode())
-        print(myString)
+#        print(myString)
     except:
         print("Data transmission failed")
 
 if __name__ == "__main__":
     
-    ser1 = initConnection('/dev/ttyUSB0', 9600)
+#    ser1 = initConnection('/dev/ttyUSB0', 115200)
+#    ser1 = initConnection('/dev/ttyCH341USB0', 115200)
+    ser1 = initConnection('COM9', 115200)
 
     while(True):
-        senddata(ser1 , [79, 83], 3)
-        time.sleep(1)
-        senddata(ser1 , [40, 120], 3)
+        senddata(ser1 , [0, 0, 90, 90])
+        time.sleep(1) 
+        
+        senddata(ser1 , [10, 10, 70, 55])
         time.sleep(1)
