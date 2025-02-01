@@ -22,7 +22,7 @@ def print_hi(name):
     print(name)  # Press Ctrl+F8 to toggle the breakpoint.
 
 
-def say_hi_internet(text, filename="welcome.mp3"):
+def say_hi_internet(text, fnam="welcome.mp3"):
     """Uses gTTS (Google Text-to-Speech) to say the given text.
     Requires an internet connection.
     """
@@ -30,14 +30,14 @@ def say_hi_internet(text, filename="welcome.mp3"):
     myobj = gTTS(text=text, lang=language, slow=False)
 
     try:
-        if os.path.exists(filename):
-            os.remove(filename)
-        myobj.save(filename)
+        if os.path.exists(fnam):
+            os.remove(fnam)
+        myobj.save(fnam)
     #    os.system("play welcome1.mp3 tempo 1.2 >/dev/null 2>&1")  # If this doesn't work, comment out and use the playsound command as below
-        playsound(filename)           # This works for Win10/python 3.9
+        playsound(fnam)           # This works for Win10/python 3.9
     finally:
-        if os.path.exists(filename):
-            os.remove(filename)
+        if os.path.exists(fnam):
+            os.remove(fnam)
 
 
 def say_hi_local(text, voice_index=0, rate=150):
@@ -68,7 +68,6 @@ def say_hi_local_different_voices(text):
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-
     try:
         text = sys.argv[1]
     except:
@@ -76,12 +75,18 @@ if __name__ == '__main__':
         pass
 
     try:
-        voice_index = sys.argv[2]
+        voice_index = int(sys.argv[2])
     except:
         voice_index = 0
         pass
 
-#    print_hi(text)
+    try:
+        rate = int(sys.argv[3])
+    except:
+        rate = 150
+        pass
+
+    print_hi(text)
 #    say_hi_internet(text)
-    say_hi_local(text, voice_index)
+    say_hi_local(text, voice_index, rate)
 #    say_hi_local_different_voices(text)
