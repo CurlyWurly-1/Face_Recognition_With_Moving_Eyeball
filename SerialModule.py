@@ -8,7 +8,13 @@
 import serial     # To install this, use "pip3 install pyserial"
 import serial.tools.list_ports
 import time
+import logging
 
+# Setup logging
+logging.basicConfig(level=logging.INFO)
+
+#logging.error(f"API request failed (Attempt {retries}/{MAX_RETRIES}): {e}")
+#logging.info(f"User: {user_input}")
 
 def find_and_connect_serial(baudrate=115200, timeout=1):
     """Scans available serial ports and connects to the first available one."""
@@ -16,20 +22,20 @@ def find_and_connect_serial(baudrate=115200, timeout=1):
     available_ports = [port.device for port in serial.tools.list_ports.comports()]
     available_ports.remove('COM1')
     if not available_ports:
-        print("No serial devices found.")
+        logging.warning("No serial devices found.")
         return None
 
-    print(f"Available serial ports: {available_ports}")
+    logging.info(f"Available serial ports: {available_ports}")
 
     for port in available_ports:
         try:
-            print(f"Attempting to connect to {port}...")
+            logging.info(f"Attempting to connect to {port}...")
             ser = serial.Serial(port, baudrate, timeout=timeout)
             if ser.is_open:
-                print(f"Connected to {port}")
+                logging.info(f"Connected to {port}")
                 return ser
         except (serial.SerialException, OSError) as e:
-            print(f"Failed to connect to {port}: {e}")
+            logging.warning(f"Failed to connect to {port}: {e}")
 
     print("Could not establish a serial connection.")
     return None
@@ -43,7 +49,7 @@ def initConnection(portNo, baudRate):
         print("Device Connected")
         return ser
     except:
-        print("Not Connected")
+        logging.info("Not Connected")
         return []
 
 def senddata(serial_device, data, digits=3):
@@ -63,7 +69,7 @@ def senddata(serial_device, data, digits=3):
         serial_device.write(myString.encode())
 #        print(myString)
     except:
-        print("Data transmission failed")
+        logging.warning("Data transmission failed")
 
 if __name__ == "__main__":
     
