@@ -3,6 +3,7 @@ import cv2
 import pickle
 import numpy as np
 import time
+import logging
 import collections
 from datetime import datetime, timedelta
 from math import degrees, atan
@@ -30,6 +31,16 @@ FPS_AVERAGE_WINDOW = 10
 # Set this flag to True if using Raspberry Pi or Jetson Nano CSI Camera Module
 USING_RPI_CAMERA_MODULE = False  # Change to True if using a Raspberry Pi/Jetson Nano camera
 
+# Speach configuration
+VOICE_INDEX   = 0
+SPEAKING_RATE = 150
+
+# Setup logging
+logging.basicConfig(level=logging.INFO)
+
+#logging.error(f"API request failed (Attempt {retries}/{MAX_RETRIES}): {e}")
+#logging.info(f"User: {user_input}")
+
 # Global Face Data
 known_face_encodings = []
 known_face_metadata = []
@@ -46,13 +57,13 @@ def get_jetson_gstreamer_source(width=FRAME_WIDTH, height=FRAME_HEIGHT):
         f"nvvidconv flip-method=2 ! video/x-raw, width={width}, height={height}, format=(string)BGRx ! "
         "videoconvert ! video/x-raw, format=(string)BGR ! appsink"
     )
-
+ 
 #****************************************************************************************************
 # say_background 
 #****************************************************************************************************
-def say_background(text):
+def say_background(text, index=VOICE_INDEX, rate=SPEAKING_RATE):
     """Run speech synthesis in the background."""
-    Popen(['python', 'speak.py', text])  # For Windows
+    Popen(["python", "speak.py", text, str(index), str(rate)])  # For Windows
 
 #****************************************************************************************************
 # save_known_faces 
@@ -61,7 +72,7 @@ def save_known_faces():
     """Save known faces to a file."""
     with open("known_faces.dat", "wb") as file_out:
         pickle.dump([known_face_encodings, known_face_metadata], file_out)
-    print("Known faces saved.")
+    logging.info("Known faces saved.")
 
 #****************************************************************************************************
 # load_known_faces 
@@ -72,9 +83,9 @@ def load_known_faces():
     try:
         with open("known_faces.dat", "rb") as file_in:
             known_face_encodings, known_face_metadata = pickle.load(file_in)
-        print("Loaded known faces.")
+        logging.info("Loaded known faces.")
     except (FileNotFoundError, EOFError):
-        print("No previous face data found.")
+        logging.info("No previous face data found.")
         known_face_encodings, known_face_metadata = [], []
 
 #****************************************************************************************************
@@ -139,12 +150,12 @@ def main_loop():
     faces_since_last_save = 0
     prev_time = time.time()
 
-    print("Camera activated. Press 'q' to exit.")
+    logging.info("Camera activated. Press 'q' to exit.")
 
     while True:
         ret, frame = video_capture.read()
         if not ret:
-            print("Failed to capture frame.")
+            logging.error("Failed to capture frame.")
             break
 
         small_frame = frame if DETECT_SCALE == 1 else cv2.resize(frame, (0, 0), fx=1/DETECT_SCALE, fy=1/DETECT_SCALE)
@@ -232,9 +243,9 @@ if __name__ == "__main__":
 
     # Verify that the camera was opened successfully
     if not video_capture.isOpened():
-        print("Error: Could not open video capture.")
+        logging.error("Error: Could not open video capture.")
     else:
-        print(f"Video capture initialized with resolution {FRAME_WIDTH}x{FRAME_HEIGHT}")
+        logging.info(f"Video capture initialized with resolution {FRAME_WIDTH}x{FRAME_HEIGHT}")
 
     load_known_faces()
     
